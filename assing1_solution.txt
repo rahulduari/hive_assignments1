@@ -1,0 +1,30 @@
+1.Calculatye total sales per year
+-> select year_id ,count(sales) from sales_order_orc group by year_id;
+
+2.Find a product for which maximum orders were placed
+->select productline,count(quantityordered) as mx_order from sales_order_orc group by productline 
+order by mx_order desc limit 1 ;  
+
+3.Calculate the total sales for each quarter
+->select qtr_id ,count(sales) as total_sales from sales_data1 group by qtr_id ;
+
+4.In which quarter sales was minimum
+->select qtr_id ,count(sales) as minimum_sales from sales_order_orc group by qtr_id order by minimum_sales asc limit 1;
+
+5.In which country sales was maximum and in which country sales was minimum
+i.sales was maximum
+->SELECT country ,count(sales) as max_sales from sales_data1 group by country order by max_sales desc limit 1;
+
+ii.sales was minimum
+->SELECT country ,count(sales) as min_sales from sales_data1 group by country order by min_sales asc limit 1;
+6.Calculate quartelry sales for each city
+->select qtr_id,city count(sales) as qtr_sales from sales_order_orc group by qtr_id,city order by 
+qtr_sales;
+
+7.Find a month for each year in which maximum number of quantities were sold
+->select month_id, year_id, count(quantityordered) as qty from sales_order_orc where year_id = 2003 
+group by year_id order by qty desc limit 1;
+select month_id, year_id, count(quantityordered) as qty from sales_order_orc where year_id = 2004
+group by year_id order by qty desc limit 1;
+select month_id, year_id, count(quantityordered) as qty from sales_order_orc where year_id = 2005
+group by year_id order by qty desc limit 1 ;
