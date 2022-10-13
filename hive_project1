@@ -1,1 +1,48 @@
 
+1.List of all agents' names. 
+-> SELECT distinct AGENT FROM agent_logging_report;
+2.Find out agent average rating.
+-> SELECT avg(Average_Rating) as average_rating,agent_name FROM agent_perfomance group by agent_name;
+3.Total working days for each agents 
+-> SELECT agent,count(date) FROM agent_logging_report group by agent;
+4.Total query that each agent have taken 
+->select sum(total_chats),agent_name from agent_performance group by agent_name;
+5.Total Feedback that each agent have received 
+-> SELECT Agent_Name ,sum(total_feedback)  FROM agent_performance group by Agent_Name;
+6.Agent name who have average rating between 3.5 to 4 
+-> SELECT Agent_Name , average_rating FROM agent_performance where Average_Rating between  3.5 and 4 ;
+7.Agent name who have rating less than 3.5 
+->SELECT Agent_Name , average_rating FROM table_name where Average_Rating  < 3.5 ;
+8.Agent name who have rating more than 4.5 
+->SELECT Agent_Name,Average_Rating as rating FROM table_name where Average_Rating > 4.5 ;
+9.How many feedback agents have received more than 4.5 average
+->SELECT Agent_Name,count(Total_Feedback) as total_feedback FROM agent_performance group by Agent_name having avg(total_feedback) > 4.5;
+10.average weekly response time for each agent
+->SELECT Agent_Name,Average_Response_Time FROM table_name group by Agent_Name;
+11. average weekly resolution time for each agents
+->SELECT Agent_Name,Average_Resolution_Time FROM table_name group by Agent_Name;
+12.Find the number of chat on which they have received a feedback 
+->select a2.total_chats,Total_Feedback as feedback from agent_data2 a2 where total_feedback in (SELECT a1.total_feedback FROM agent_data2 a1);
+13.Total contribution hour for each and every agents weekly basis 
+->SELECT agent_name,Duration as total_contribution FROM agent_data4;
+14.Perform inner join, left join and right join based on the agent column and after joining the table export that data into your local system
+i inner join-
+select * from agent_data2 a2 inner join agent_data4 a4 on 
+a2.Agent_Name=a4.Agent; 
+ii left join
+select * from agent_data2 a2 left join agent_data4 a4 on a2.Agent_Name=a4.Agent; 
+iii right join
+select * from agent_data2 a2 right join agent_data4 a4 on a2.Agent_Name=a4.Agent; 
+15.Perform partitioning on top of the agent column and then on top of that perform bucketing for each partitioning.
+i.partition query
+create table prt_table (
+ordernumber int,
+quantityordered int,
+sales int,
+year_id int
+)
+partitioned by (city string);
+*load the data
+insert overwrite table prt_table partition(city = 'nyc') select ordernumber,quantityordered,sales,year_id from sales_order_orc
+where city = 'nyc';
+ii.bucketing
