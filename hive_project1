@@ -46,6 +46,8 @@ partitioned by (city string);
 insert overwrite table prt_table partition(city = 'nyc') select ordernumber,quantityordered,sales,year_id from sales_order_orc
 where city = 'nyc';
 ii.bucketing
+before load the data for bucketing we need to set up 
+set hive.enforse.bucketing=true;
  create table buck_users                                                                                                                 
     > (                                                                                                                                       
     > id int,                                                                                                                                 
