@@ -46,3 +46,15 @@ partitioned by (city string);
 insert overwrite table prt_table partition(city = 'nyc') select ordernumber,quantityordered,sales,year_id from sales_order_orc
 where city = 'nyc';
 ii.bucketing
+ create table buck_users                                                                                                                 
+    > (                                                                                                                                       
+    > id int,                                                                                                                                 
+    > name string,                                                                                                                            
+    > salary int,                                                                                                                             
+    > unit string                                                                                                                             
+    > )                                                                                                                                       
+    > clustered by (id)                                                                                                                       
+    > sorted by (id)                                                                                                                          
+    > into 2 buckets;
+    
+insert overwrite table buck_users select * from sales_order_orc;
